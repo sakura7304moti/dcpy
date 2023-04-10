@@ -1,0 +1,9 @@
+base:
+    database : '/root/data/Twitter/base/Database'
+    image : '/root/data/Twitter/base/image'
+holo:
+    database : '/root/data/Twitter/holo/Database'
+    image : '/root/data/Twitter/holo/image'
+user:
+    database : '/root/data/Twitter/user/Database'
+    image : '/root/data/Twitter/user/image'

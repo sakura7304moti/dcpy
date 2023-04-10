@@ -1,0 +1,15 @@
+youtube:
+    mp3 : '/root/data/YouTube/MP3/%(title)s.mp3'
+    mp4 : '/root/data/YouTube/MP4/%(title)s.mp4'
+    
+twitter:
+    holo : 
+        image : '/root/data/Twitter_ver3/holo/image'
+        csv : '/root/data/Twitter_ver3/holo/csv'
+    base : 
+        image : '/root/data/Twitter_ver3/base/image'
+        csv : '/root/data/Twitter_ver3/base/csv'
+        
+pixiv:
+    url : '/root/data/Pixiv/URL_list'
+    image : "/root/data/Pixiv"
