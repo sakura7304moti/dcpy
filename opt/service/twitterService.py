@@ -1,8 +1,7 @@
 import sys
 sys.path.append('../utils')
 sys.path.append('../model')
-#import twitterModel as tw
-import twitter2Model as tw
+import twitterModel as tw
 
 def base_download(query,args_date = 30,args_tweets = 3000):
     tw.base_download(query,args_date,args_tweets)

@@ -1,2 +1,2 @@
-cd F:\docker\flask-server
+cd F:\docker\dcpy
 docker compose exec flask bash
