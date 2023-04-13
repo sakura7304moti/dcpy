@@ -41,12 +41,12 @@ class options:
 def update_options(date = 30,limit = 3000):
     options.limit_date = date
     options.limit_tweets = limit
-    print(f'date : {options.limit_date} , limit : {options.limit_tweets}')
-    message(f'date : {options.limit_date} , limit : {options.limit_tweets}')
+    print(f'date : {options.limit_date} ,\n limit : {options.limit_tweets}')
+    message(f'date : {options.limit_date} ,\n limit : {options.limit_tweets}')
 
 #ツイートを取得
 def get_tweets(query , mode):
-    print('get tweets...')
+    print(f'get tweets {query}...')
     if mode == 'user':
         scraper = sntwitter.TwitterUserScraper(query)
     else:
@@ -169,7 +169,11 @@ def save_date_image(date,image_path,mode,query):
     start_week = pd.to_datetime(first_date).week
     if date.month == 1:
         start_week = 1
-    week_str = str(now_week - start_week + 1).zfill(2)
+    
+    week_num = now_week - start_week + 1
+    if(week_num < 0):
+        week_num = 0
+    week_str = str(week_num).zfill(2)
     date_dir = year + month + week_str
     
     file_name = os.path.basename(image_path)
@@ -254,26 +258,30 @@ def sub_download(query , mode , date , limit):
     tweet_df = get_tweets(query , mode)# ツイート取得
     csv_path = get_save_csv(mode , query)# データフレームの保存先を取得
     marged = marge_dataframe(tweet_df , csv_path)# すでにデータフレームが存在していたらマージする
-    marged.to_csv(csv_path)# マージ後のデータフレームを保存する
+    tweet_df.to_csv(csv_path)# マージ後のデータフレームを保存する
     
-    message(f'download tweets {len(marged)}')
+    message(f'get {query} tweets {len(tweet_df)}')
     
-    for index,row in tqdm(marged.iterrows(), total=len(marged) , desc='image DL'):#画像のダウンロード&保存処理
+    saved = 0
+    
+    for index,row in tqdm(tweet_df.iterrows(), total=len(tweet_df) , desc='image DL'):#画像のダウンロード&保存処理
         images = row['images']
         for url in images:
             save_path = get_save_path_all(url , mode , query)
-            try:
-                image_download(url , save_path)
-            except:
-                pass
+            if not os.path.exists(save_path):
+                try:
+                    image_download(url , save_path)
+                except:
+                    pass
             
             #ALLにダウンロードできた場合
             if os.path.exists(save_path):
+                saved = saved + 1
                 date = row['date']
                 save_date_image(date , save_path , mode , query)#YYYYMMWWで画像を保存する
                 good = row['likeCount']
                 save_good_image(good , save_path , mode , query)#高評価別で画像を保存する
-    message(f'finish {query}')
+    message(f'saved {query} : {saved}')
             
 def base_download(query , date = 30,limit = 3000):
     mode = 'base'
