@@ -46,7 +46,7 @@ def update_options(date = 30,limit = 3000):
 
 #ツイートを取得
 def get_tweets(query , mode):
-    print(f'get tweets {query}...')
+    print(f'start {query}...')
     if mode == 'user':
         scraper = sntwitter.TwitterUserScraper(query)
     else:
@@ -254,7 +254,7 @@ def save_good_image(good , image_path , mode , query):
 def sub_download(query , mode , date , limit):
     update_options(date , limit)# オプション更新
     
-    message(f'get tweets {query}')
+    message(f'download start \n {query}')
     tweet_df = get_tweets(query , mode)# ツイート取得
     csv_path = get_save_csv(mode , query)# データフレームの保存先を取得
     marged = marge_dataframe(tweet_df , csv_path)# すでにデータフレームが存在していたらマージする
@@ -281,7 +281,7 @@ def sub_download(query , mode , date , limit):
                 save_date_image(date , save_path , mode , query)#YYYYMMWWで画像を保存する
                 good = row['likeCount']
                 save_good_image(good , save_path , mode , query)#高評価別で画像を保存する
-    message(f'saved {query} : {saved}')
+    message(f'download finish \n {query} : {saved}')
             
 def base_download(query , date = 30,limit = 3000):
     mode = 'base'
