@@ -1,4 +1,4 @@
-#Import--------------------------------------------------memo
+#Import--------------------------------------------------
 import pandas as pd
 from tqdm import tqdm
 import snscrape.modules.twitter as sntwitter
