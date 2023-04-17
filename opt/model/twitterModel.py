@@ -258,7 +258,7 @@ def sub_download(query , mode , date , limit):
     tweet_df = get_tweets(query , mode)# ツイート取得
     csv_path = get_save_csv(mode , query)# データフレームの保存先を取得
     marged = marge_dataframe(tweet_df , csv_path)# すでにデータフレームが存在していたらマージする
-    tweet_df.to_csv(csv_path)# マージ後のデータフレームを保存する
+    marged.to_csv(csv_path)# マージ後のデータフレームを保存する
     
     message(f'get tweets \n {query} : {len(tweet_df)}')
     
